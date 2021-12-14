@@ -28,6 +28,8 @@ def merge_sort(lst):
         merge_sort(lst1)
         merge_sort(lst2)
         return merge(lst1, lst2, lst)
+    else:
+        return []
 
 def merge(lst1, lst2, lst):
     "Executes merge sorting using lists from merge_sort function"
@@ -101,16 +103,19 @@ def quick_sort(lst):
     >>> quick_sort([5, 10, 6, 8])
     [5, 6, 8, 10]
     """
-    less = []
-    more = []
-    key = lst[0]
-    for item in lst:
-        if item < key:
-            less.append(item)
-        elif item > key:
-            more.append(item)
-    if len(less)>0:
-        less = quick_sort(less)
-    if len(more)>0:
-        more = quick_sort(more)
-    return less + [key] + more
+    if len(lst) > 0:
+        less = []
+        more = []
+        key = lst[0]
+        for item in lst:
+            if item < key:
+                less.append(item)
+            elif item > key:
+                more.append(item)
+        if len(less)>=0:
+            less = quick_sort(less)
+        if len(more)>0:
+            more = quick_sort(more)
+        return less + [key] + more
+    else:
+        return []
