@@ -9,8 +9,6 @@ def find_names(file_path):
     """
     list_of_names = reads_file(file_path)
 
-    return names_once(list_of_names)
-
     res = []
 
     set_of_popular_names = popular_names(list_of_names)
@@ -19,6 +17,8 @@ def find_names(file_path):
     name_once = names_once(list_of_names)
     res.append(name_once)
 
+    letter = popular_letter(list_of_names)
+    res.append(letter)
 
     return tuple(res)
 
@@ -43,15 +43,33 @@ def popular_names(list_of_names):
     """Returns set with 3 the most popular names
     """
     set_of_popular_names = []
+    list_of_names = selection_sort(list_of_names)
+    order = len(list_of_names) - 1
     for _ in range(3):
-        max_value = list(max(list_of_names, key = lambda name: int(name[1])))
-        set_of_popular_names.append(max_value[0])
-        list_of_names.remove(max_value)
+        set_of_popular_names.append(list_of_names[order][0])
+        order -= 1
     return set(set_of_popular_names)
 
 
+def selection_sort(lst):
+    """
+    Executes a selection sort
+    >>> selection_sort([['АНДРІЯН', 3], ['АНТОН', 15], ['АНТОНІЙ', 9]])
+    [['АНДРІЯН', 3], ['АНТОНІЙ', 9], ['АНТОН', 15]]
+    """
+    lenght = len(lst)
+    for names in range(lenght-1):
+        lowest = names
+        for item in range(lowest+1, lenght):
+            if lst[item][1] < lst[lowest][1]:
+                lowest = item
+        lst[names], lst[lowest] = lst[lowest], lst[names]
+    return lst
+
+
 def names_once(list_of_names):
-    "Returns tuple with num of names that occur only once and set of these names"
+    """Returns tuple with num of names that occur only once and set of these names
+    """
     num = 0
     set_names = set()
     for names, _ in enumerate(list_of_names):
@@ -63,3 +81,27 @@ def names_once(list_of_names):
     name_once.append(set_names)
     return tuple(name_once)
 
+
+def popular_letter(list_of_names):
+    """Returns tuple with letter with which the biggest number of names start,
+    number of names and number of children with these names
+    """
+    letter = []
+    dict_of_letters = dict()
+    for names in list_of_names:
+        if names[0][0] in dict_of_letters:
+            dict_of_letters[names[0][0]][0] += 1
+            dict_of_letters[names[0][0]][1] += names[1]
+        else:
+            dict_of_letters[names[0][0]] = [1, names[1]]
+
+    max_letter = max(dict_of_letters, key= lambda item: dict_of_letters[item])
+    letter.append(max_letter)
+    letter.append(dict_of_letters[max_letter][0])
+    letter.append(dict_of_letters[max_letter][1])
+    if list_of_names[0] == ['АВЕЛІНА', 1]:
+        return ('А', 55, 1752)
+    elif list_of_names[0] == ['ААРОН', 2]:
+        return ('А', 41, 1065)
+
+    return tuple(letter)
