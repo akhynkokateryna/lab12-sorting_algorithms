@@ -99,9 +99,5 @@ def popular_letter(list_of_names):
     letter.append(max_letter)
     letter.append(dict_of_letters[max_letter][0])
     letter.append(dict_of_letters[max_letter][1])
-    if list_of_names[0] == ['АВЕЛІНА', 1]:
-        return ('А', 55, 1752)
-    elif list_of_names[0] == ['ААРОН', 2]:
-        return ('А', 41, 1065)
 
     return tuple(letter)
