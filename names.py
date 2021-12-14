@@ -63,12 +63,3 @@ def names_once(list_of_names):
     name_once.append(set_names)
     return tuple(name_once)
 
-
-def 
-
-
-print(find_names('boy_names'))
-
-# if __name__ == "__main__":
-#     import doctest
-#     doctest.testmod()
