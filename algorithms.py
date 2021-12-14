@@ -16,16 +16,44 @@ def linear_search(list_of_values, value):
         return -1
 
 
-def merge_sort(L):
+def merge_sort(lst):
     """
-    Executes merge sorting and returns sorted list
-    >>> merge_sort([5, 10, 6, 8])
-    [5, 6, 8, 10]
+    Splits main list into lists with two elements and sends them to merge function
+    >>> merge_sort([5, 10, 6, 8, 15, 2, 9, 20])
+    [2, 5, 6, 8, 9, 10, 15, 20]
     """
-    
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        lst1, lst2 = lst[:mid], lst[mid:]
+        merge_sort(lst1)
+        merge_sort(lst2)
+        return merge(lst1, lst2, lst)
 
+def merge(lst1, lst2, lst):
+    "Executes merge sorting using lists from merge_sort function"
+    index1 = index2 = index = 0
+    len1, len2 = len(lst1), len(lst2)
 
-print(merge_sort([5, 10, 6, 8]))
+    while index1 < len1 and index2 < len2:
+        if lst1[index1] < lst2[index2]:
+            lst[index] = lst1[index1]
+            index1 += 1
+        else:
+            lst[index] = lst2[index2]
+            index2 += 1
+        index += 1
+
+    while index1 < len(lst1):
+        lst[index] = lst1[index1]
+        index1 += 1
+        index += 1
+
+    while index2 < len(lst2):
+        lst[index] = lst2[index2]
+        index2 += 1
+        index += 1
+
+    return lst
 
 
 def binary_search(list_of_values, value):
@@ -39,7 +67,7 @@ def binary_search(list_of_values, value):
     if value in list_of_values:
         initial = 0
         right = len(list_of_values)
-        while initial != right+ 1:
+        while initial != right + 1:
             medium = (initial + right) // 2
             if list_of_values[medium] < value:
                 initial = medium + 1
@@ -86,7 +114,3 @@ def quick_sort(lst):
     if len(more)>0:
         more = quick_sort(more)
     return less + [key] + more
-
-# if __name__ == "__main__":
-#     import doctest
-#     doctest.testmod()
